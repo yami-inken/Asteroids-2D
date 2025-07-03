@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraFollowWithMargins : MonoBehaviour
 {
     public Transform target;             // Your spaceship
-    public Vector2 margin = new Vector2(2f, 2f); // Distance from screen edge before camera moves
+    public Vector2 margin = new Vector2(9f, 4f); // Distance from screen edge before camera moves
     public float smoothSpeed = 5f;       // How fast the camera catches up
 
     private Camera cam;

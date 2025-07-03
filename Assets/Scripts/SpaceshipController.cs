@@ -106,18 +106,19 @@ void Update()
     {
         if (isAccelerating)
         {
-            moving();
+            //Accelerate the spaceship in the direction it is facing
+            myRb.linearVelocity = movementSpeed * transform.up.normalized * 5f;
+        }
+        else
+        {
+            //if not accelerating, keep the spaceship moving in the direction it was last facing and with same speed
+            
         }
     }
 
     void shooting()
     {
         var bullets = Instantiate(bulletpf, barrel.position, barrel.rotation);
-    }
-
-    void moving()
-    {
-        myRb.linearVelocity = movementSpeed * transform.up.normalized * 5f;
     }
 
     public void TakeDamage(float damage)

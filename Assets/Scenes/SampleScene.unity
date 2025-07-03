@@ -1779,6 +1779,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7300483211026368890, guid: e3f021ccb2296de409e0106e9f1e0be1, type: 3}
+      propertyPath: m_AngularDamping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9018175699624015842, guid: e3f021ccb2296de409e0106e9f1e0be1, type: 3}
       propertyPath: m_SortingOrder
       value: 2
