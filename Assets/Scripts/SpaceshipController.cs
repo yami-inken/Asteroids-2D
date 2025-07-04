@@ -22,22 +22,25 @@ public class SpaceSHip : MonoBehaviour
 
     bool isAccelerating = false;
 
-    public float spaceShipHealth = 100f; // Health of the spaceship
+    public float spaceShipHealth; // Health of the spaceship
+
+    public float maxSpaceShipHealth = 100f; // Maximum health of the spaceship
+
+    public float Fuel;// Fuel of the spaceship
+
+    public float maxFuel = 100f; // Maximum fuel of the spaceship
 
     public float fireRate = 0.25f;
 
     private float nextFireTime = 0f;
-
-    public Slider healthSlider; // Reference to the UI slider for health
 
     public bool isinteractable = false; // Flag to check if the spaceship is interactable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         myRb = GetComponent<Rigidbody2D>();
-        healthSlider.value = spaceShipHealth;
-        Debug.Log("Interact enabled: " + playerInputs.Player.Interact.enabled);
-        Debug.Log("Bindings: " + playerInputs.Player.Interact.bindings.Count);
+        spaceShipHealth = maxSpaceShipHealth; // Initialize spaceship health
+        Fuel = maxFuel; // Initialize spaceship fuel
     }
 
     private void OnEnable()
@@ -104,10 +107,11 @@ void Update()
 
     private void FixedUpdate()
     {
-        if (isAccelerating)
+        if (isAccelerating && Fuel > 0)
         {
             //Accelerate the spaceship in the direction it is facing
             myRb.linearVelocity = movementSpeed * transform.up.normalized * 5f;
+            Fuel = Fuel - Time.deltaTime * 10f; // Decrease fuel while accelerating
         }
         else
         {
@@ -124,8 +128,6 @@ void Update()
     public void TakeDamage(float damage)
     {
         spaceShipHealth -= damage;
-
-        healthSlider.value = spaceShipHealth; // Update the health slider UI
 
         if (spaceShipHealth <= 0)
         {
