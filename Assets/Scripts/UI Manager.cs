@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     public Slider healthSL; // Reference to the UI slider for health
     public Slider FuelSL; // Reference to the UI slider for mana
+    public GameObject timeleftpanel; // Reference to the UI panel for time left
+    public TextMeshProUGUI timelefttext; // Reference to the UI text for time left
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,5 +44,15 @@ public class UIManager : MonoBehaviour
     {
         healthSL.value = spaceship.spaceShipHealth; // Initialize health slider
         FuelSL.value = spaceship.Fuel;
+        if (spaceship.Fuel <= 0f)
+        {
+            timeleftpanel.SetActive(true); // Show time left panel if fuel is empty
+            timelefttext.text = "Time Left: " + spaceship.timeleft.ToString("F2") + "s"; // Update time left text
+        }
+        else
+        {
+            timeleftpanel.SetActive(false); // Hide time left panel if there is fuel
+            spaceship.timeleft = spaceship.maxtimeleft; // Reset time left if there is fuel
+        }
     }
 }

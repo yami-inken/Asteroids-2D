@@ -30,7 +30,11 @@ public class SpaceSHip : MonoBehaviour
 
     public float maxFuel = 100f; // Maximum fuel of the spaceship
 
-    public float fireRate = 0.25f;
+    public float maxtimeleft = 120f; // Maximum time left before spaceship is destroyed
+    
+    public float timeleft; // Time left before spaceship is destroyed due to lack of fuel
+
+    public float fireRate = 0.25f; // Fire rate of the spaceship's gun
 
     private float nextFireTime = 0f;
 
@@ -41,6 +45,7 @@ public class SpaceSHip : MonoBehaviour
         myRb = GetComponent<Rigidbody2D>();
         spaceShipHealth = maxSpaceShipHealth; // Initialize spaceship health
         Fuel = maxFuel; // Initialize spaceship fuel
+        timeleft = maxtimeleft; // Initialize time left
     }
 
     private void OnEnable()
@@ -117,6 +122,15 @@ void Update()
         {
             //if not accelerating, keep the spaceship moving in the direction it was last facing and with same speed
             
+        }
+
+        if (Fuel < 0)
+        {
+            timeleft = timeleft - Time.deltaTime;
+            if (timeleft <= maxtimeleft)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
