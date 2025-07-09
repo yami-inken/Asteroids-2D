@@ -41,6 +41,9 @@ public class SpaceSHip : MonoBehaviour
     public float Spacedust = 0f; // Amount of space dust collected
 
     public bool isinteractable = false; // Flag to check if the spaceship is interactable
+
+    private TrailRenderer burnertrial; // Reference to the LineRenderer for the burner trail
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -48,6 +51,7 @@ public class SpaceSHip : MonoBehaviour
         spaceShipHealth = maxSpaceShipHealth; // Initialize spaceship health
         Fuel = maxFuel; // Initialize spaceship fuel
         timeleft = maxtimeleft; // Initialize time left
+        burnertrial = GetComponent<TrailRenderer>(); // Get the LineRenderer component for the burner trail
     }
 
     private void OnEnable()
@@ -119,11 +123,12 @@ void Update()
             //Accelerate the spaceship in the direction it is facing
             myRb.linearVelocity = movementSpeed * transform.up.normalized * 5f;
             Fuel = Fuel - Time.deltaTime * 10f; // Decrease fuel while accelerating
+            burnertrial.enabled = true; // Enable the burner trail when accelerating
         }
         else
         {
             //if not accelerating, keep the spaceship moving in the direction it was last facing and with same speed
-            
+            burnertrial.enabled = false; // Disable the burner trail when not accelerating
         }
 
         if (Fuel < 0)
