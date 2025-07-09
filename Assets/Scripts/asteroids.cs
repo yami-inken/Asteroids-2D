@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class asteroids : MonoBehaviour
@@ -14,7 +15,7 @@ public class asteroids : MonoBehaviour
 
     public float trackingStopDistance = 2f;
 
-    [SerializeField]private bool isTracking = true; // Flag to check if the asteroid is tracking the player
+    [SerializeField] private bool isTracking = true; // Flag to check if the asteroid is tracking the player
 
     SpaceSHip spaceship; // Reference to the SpaceSHip component
 
@@ -70,7 +71,7 @@ public class asteroids : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Handle collision with player
-            
+
             Debug.Log("Asteroid collided with player!");
             collision.gameObject.GetComponent<SpaceSHip>().TakeDamage(10f);
             // You can add more logic here, like damaging the player or destroying the asteroid
@@ -80,7 +81,8 @@ public class asteroids : MonoBehaviour
             // Handle collision with another asteroid
             Debug.Log("Asteroid collided with another asteroid!");
             // You can add more logic here, like bouncing off or destroying one of the asteroids
-        }else if (collision.gameObject.CompareTag("Bullet"))
+        }
+        else if (collision.gameObject.CompareTag("Bullet"))
         {
             // Handle collision with bullet
             Debug.Log("Asteroid hit by bullet!");
@@ -102,6 +104,7 @@ public class asteroids : MonoBehaviour
                 {
                     // Add other drops here
                     //Debug.Log("Asteroid dropped something else!");
+                    spaceship.Spacedust = spaceship.Spacedust + Random.Range(0, 5); // Increment spacedust by 1 on asteroid destruction
                 }
             }
         }
@@ -111,5 +114,27 @@ public class asteroids : MonoBehaviour
             Debug.Log("Asteroid collided with: " + collision.gameObject.name);
         }
     }
-}
 
+    private void OnDestroy()
+    {
+        int randomDrop = Random.Range(0, 6);
+        if (randomDrop == 0)
+        {
+            spaceship.Fuel = spaceship.Fuel + 5f;
+        }
+        else if (randomDrop == 1)
+        {
+            if (spaceship.Fuel < 0f)
+            {
+                spaceship.Fuel = spaceship.Fuel + 10f;
+            }
+            spaceship.spaceShipHealth = spaceship.spaceShipHealth + 5f;
+        }
+        else
+        {
+            // Add other drops here
+            //Debug.Log("Asteroid dropped something else!");
+            spaceship.Spacedust = spaceship.Spacedust + Random.Range(1, 6); // Increment spacedust by 1 on asteroid destruction
+        }
+    }
+}

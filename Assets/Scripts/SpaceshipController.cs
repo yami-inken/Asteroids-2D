@@ -38,6 +38,8 @@ public class SpaceSHip : MonoBehaviour
 
     private float nextFireTime = 0f;
 
+    public float Spacedust = 0f; // Amount of space dust collected
+
     public bool isinteractable = false; // Flag to check if the spaceship is interactable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -127,7 +129,7 @@ void Update()
         if (Fuel < 0)
         {
             timeleft = timeleft - Time.deltaTime;
-            if (timeleft <= maxtimeleft)
+            if (timeleft <= 0)
             {
                 Destroy(this.gameObject);
             }

@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     public Slider FuelSL; // Reference to the UI slider for mana
     public GameObject timeleftpanel; // Reference to the UI panel for time left
     public TextMeshProUGUI timelefttext; // Reference to the UI text for time left
-
+    public TextMeshProUGUI spacedust_collectedTEXT; // Reference to the UI text for space dust collected
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
     {
         healthSL.value = spaceship.spaceShipHealth; // Initialize health slider
         FuelSL.value = spaceship.Fuel;
+        spacedust_collectedTEXT.text = "Space Dust :- " + spaceship.Spacedust.ToString(); // Update space dust collected text
         if (spaceship.Fuel <= 0f)
         {
             timeleftpanel.SetActive(true); // Show time left panel if fuel is empty
