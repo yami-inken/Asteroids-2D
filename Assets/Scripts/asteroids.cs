@@ -100,13 +100,17 @@ public class asteroids : MonoBehaviour
                 }
                 else if (randomDrop == 1)
                 {
+                    if (spaceship.Fuel < 0f)
+                    {
+                        spaceship.Fuel = spaceship.Fuel + 10f;
+                    }
                     spaceship.spaceShipHealth = spaceship.spaceShipHealth + 5f;
                 }
                 else
                 {
                     // Add other drops here
                     //Debug.Log("Asteroid dropped something else!");
-                    spaceship.Spacedust = spaceship.Spacedust + Random.Range(0, 5); // Increment spacedust by 1 on asteroid destruction
+                    spaceship.Spacedust = spaceship.Spacedust + Random.Range(1, 6); // Increment spacedust by 1 on asteroid destruction
                 }
             }
         }
@@ -119,24 +123,6 @@ public class asteroids : MonoBehaviour
 
     private void OnDestroy()
     {
-        int randomDrop = Random.Range(0, 6);
-        if (randomDrop == 0)
-        {
-            spaceship.Fuel = spaceship.Fuel + 5f;
-        }
-        else if (randomDrop == 1)
-        {
-            if (spaceship.Fuel < 0f)
-            {
-                spaceship.Fuel = spaceship.Fuel + 10f;
-            }
-            spaceship.spaceShipHealth = spaceship.spaceShipHealth + 5f;
-        }
-        else
-        {
-            // Add other drops here
-            //Debug.Log("Asteroid dropped something else!");
-            spaceship.Spacedust = spaceship.Spacedust + Random.Range(1, 6); // Increment spacedust by 1 on asteroid destruction
-        }
+        
     }
 }

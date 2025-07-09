@@ -42,7 +42,9 @@ public class SpaceSHip : MonoBehaviour
 
     public bool isinteractable = false; // Flag to check if the spaceship is interactable
 
-    private TrailRenderer burnertrial; // Reference to the LineRenderer for the burner trail
+    public TrailRenderer burnertrial; // Reference to the LineRenderer for the burner trail
+
+    public bool isalive = true; // Flag to check if the spaceship is alive
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,7 +53,10 @@ public class SpaceSHip : MonoBehaviour
         spaceShipHealth = maxSpaceShipHealth; // Initialize spaceship health
         Fuel = maxFuel; // Initialize spaceship fuel
         timeleft = maxtimeleft; // Initialize time left
-        burnertrial = GetComponent<TrailRenderer>(); // Get the LineRenderer component for the burner trail
+        if (burnertrial == null)
+        { // Check if burner trail is not assigned in the inspector
+            burnertrial = this.GetComponentInChildren<TrailRenderer>(); // Get the LineRenderer component for the burner trail
+        }
     }
 
     private void OnEnable()
@@ -136,6 +141,7 @@ void Update()
             timeleft = timeleft - Time.deltaTime;
             if (timeleft <= 0)
             {
+                isalive = false; // Set the spaceship as not alive when time runs out
                 Destroy(this.gameObject);
             }
         }
@@ -152,7 +158,7 @@ void Update()
 
         if (spaceShipHealth <= 0)
         {
-          
+            isalive = false; // Set the spaceship as not alive when health reaches zero
             Destroy(gameObject); // Destroy the spaceship when health reaches zero
         }
 

@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject timeleftpanel; // Reference to the UI panel for time left
     public TextMeshProUGUI timelefttext; // Reference to the UI text for time left
     public TextMeshProUGUI spacedust_collectedTEXT; // Reference to the UI text for space dust collected
+    public GameObject Gameoverpanel; // Reference to the game over panel
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,11 +51,20 @@ public class UIManager : MonoBehaviour
         {
             timeleftpanel.SetActive(true); // Show time left panel if fuel is empty
             timelefttext.text = "Time Left: " + spaceship.timeleft.ToString("F2") + "s"; // Update time left text
+            if(spaceship.timeleft < 0f)
+            {
+                timeleftpanel.SetActive(false); // Hide time left panel if time is up
+            }
         }
         else
         {
             timeleftpanel.SetActive(false); // Hide time left panel if there is fuel
             spaceship.timeleft = spaceship.maxtimeleft; // Reset time left if there is fuel
+        }
+
+        if(spaceship.isalive == false)
+        {
+            Gameoverpanel.SetActive(true); // Show game over panel if spaceship is not alive
         }
     }
 }
