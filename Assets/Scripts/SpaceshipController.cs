@@ -142,7 +142,7 @@ void Update()
             if (timeleft <= 0)
             {
                 isalive = false; // Set the spaceship as not alive when time runs out
-                Destroy(this.gameObject);
+                this.gameObject.SetActive(false); // Deactivate the spaceship when time runs out
             }
         }
     }
@@ -159,7 +159,8 @@ void Update()
         if (spaceShipHealth <= 0)
         {
             isalive = false; // Set the spaceship as not alive when health reaches zero
-            Destroy(gameObject); // Destroy the spaceship when health reaches zero
+            //Destroy(gameObject); // Destroy the spaceship when health reaches zero
+            this.gameObject.SetActive(false); // Deactivate the spaceship when health reaches zero
         }
 
     }

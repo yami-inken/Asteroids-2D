@@ -14,11 +14,29 @@ public class AsteroidSpawn : MonoBehaviour
 
     SpaceSHip spaceship; // Reference to the SpaceSHip component
 
+    public bool isspawning = false; // Flag to control spawning
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player"); // Find the player object by tag
         spaceship = player.GetComponent<SpaceSHip>(); // Get the SpaceSHip component from the player
         StartCoroutine(SpawnAsteroids());
+    }
+
+    private void Update()
+    {
+        if (spaceship != null)
+        {
+            if (!isspawning && spaceship.isalive)
+            {
+                StartCoroutine(SpawnAsteroids());
+                isspawning = true;
+            }
+            else if (isspawning && !spaceship.isalive)
+            {
+                isspawning = false; // player died, stop spawning
+            }
+        }
     }
 
     private IEnumerator SpawnAsteroids()

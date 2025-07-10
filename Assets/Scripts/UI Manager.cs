@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -66,5 +67,22 @@ public class UIManager : MonoBehaviour
         {
             Gameoverpanel.SetActive(true); // Show game over panel if spaceship is not alive
         }
+    }
+
+    public void onretry()
+    {
+        Gameoverpanel.SetActive(false); // Hide game over panel
+        spaceship.isalive = true; // Reset spaceship alive status
+        spaceship.spaceShipHealth = spaceship.maxSpaceShipHealth; // Reset spaceship health
+        spaceship.Fuel = spaceship.maxFuel; // Reset spaceship fuel
+        spaceship.Spacedust = 0f; // Reset space dust collected
+        spaceship.timeleft = spaceship.maxtimeleft; // Reset time left
+        player.transform.position = Vector3.zero; // Reset player position to origin
+        player.SetActive(true); // Reactivate player object
+    }
+
+    public void onmenu()
+    {
+        SceneManager.LoadScene("MainMenu"); // Load the main menu scene
     }
 }

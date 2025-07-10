@@ -19,4 +19,10 @@ public class MenuButtonManager : MonoBehaviour
     {
         SceneManager.LoadScene("SpaceScene"); // Load the main game scene when the start button is pressed
     }
+
+    public void onexitbutton()
+    {
+        Application.Quit(); // Exit the application when the exit button is pressed
+        Debug.Log("Exit button pressed, application will close."); // Log message for debugging
+    }
 }
