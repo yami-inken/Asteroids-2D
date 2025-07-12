@@ -12,27 +12,27 @@ public class AsteroidSpawn : MonoBehaviour
     public float minSpawnTime = 1f; // minimum interval in seconds
     public float maxSpawnTime = 3f; // maximum interval in seconds
 
-    SpaceSHip spaceship; // Reference to the SpaceSHip component
+    PlayerData PlayerData; // Reference to the SpaceSHip component
 
     public bool isspawning = false; // Flag to control spawning
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player"); // Find the player object by tag
-        spaceship = player.GetComponent<SpaceSHip>(); // Get the SpaceSHip component from the player
+        PlayerData = PlayerDataManager.Instance.playerData; // Get the SpaceSHip component from the player
         StartCoroutine(SpawnAsteroids());
     }
 
     private void Update()
     {
-        if (spaceship != null)
+        if (PlayerData != null)
         {
-            if (!isspawning && spaceship.isalive)
+            if (!isspawning && PlayerData.isAlive)
             {
                 StartCoroutine(SpawnAsteroids());
                 isspawning = true;
             }
-            else if (isspawning && !spaceship.isalive)
+            else if (isspawning && !PlayerData.isAlive)
             {
                 isspawning = false; // player died, stop spawning
             }
@@ -41,7 +41,7 @@ public class AsteroidSpawn : MonoBehaviour
 
     private IEnumerator SpawnAsteroids()
     {
-        while (spaceship.isalive)
+        while (PlayerData.isAlive)
         {
             // Wait for a random amount of time before spawning
             float wait = Random.Range(minSpawnTime, maxSpawnTime);

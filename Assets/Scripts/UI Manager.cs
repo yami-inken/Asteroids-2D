@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     private GameObject player;
 
-    SpaceSHip spaceship; // Reference to the SpaceSHip component
+    PlayerData PlayerData; // Reference to the SpaceSHip component
 
     [SerializeField]
     public Slider healthSL; // Reference to the UI slider for health
@@ -25,34 +25,36 @@ public class UIManager : MonoBehaviour
 
         if (player != null)
         {
-            spaceship = player.GetComponent<SpaceSHip>();
-            if (spaceship != null)
-            {
-                healthSL.value = spaceship.spaceShipHealth; // Initialize health slider
-                FuelSL.value = spaceship.movementSpeed; // 
-            }
-            else
-            {
-                Debug.LogError("SpaceSHip component not found on player object.");
-            }
+            
         }
         else
         {
             Debug.LogError("Player object not found in the scene.");
+        }
+
+        PlayerData = PlayerDataManager.Instance.playerData;
+        if (PlayerData != null)
+        {
+            healthSL.value = PlayerData.currentHealth; // Initialize health slider
+            FuelSL.value = PlayerData.currentFuel; // 
+        }
+        else
+        {
+            Debug.LogError("Player data not accessed.");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthSL.value = spaceship.spaceShipHealth; // Initialize health slider
-        FuelSL.value = spaceship.Fuel;
-        spacedust_collectedTEXT.text = "Space Dust :- " + spaceship.Spacedust.ToString(); // Update space dust collected text
-        if (spaceship.Fuel <= 0f)
+        healthSL.value = PlayerData.currentHealth; // Initialize health slider
+        FuelSL.value = PlayerData.currentFuel;
+        spacedust_collectedTEXT.text = "Space Dust :- " + PlayerData.spacedust.ToString(); // Update space dust collected text
+        if (PlayerData.currentFuel <= 0f)
         {
             timeleftpanel.SetActive(true); // Show time left panel if fuel is empty
-            timelefttext.text = "Time Left: " + spaceship.timeleft.ToString("F2") + "s"; // Update time left text
-            if(spaceship.timeleft < 0f)
+            timelefttext.text = "Time Left: " + PlayerData.currentTimeLeft.ToString("F2") + "s"; // Update time left text
+            if(PlayerData.currentTimeLeft < 0f)
             {
                 timeleftpanel.SetActive(false); // Hide time left panel if time is up
             }
@@ -60,10 +62,10 @@ public class UIManager : MonoBehaviour
         else
         {
             timeleftpanel.SetActive(false); // Hide time left panel if there is fuel
-            spaceship.timeleft = spaceship.maxtimeleft; // Reset time left if there is fuel
+            PlayerData.currentTimeLeft = PlayerData.maxTimeWithoutFuel; // Reset time left if there is fuel
         }
 
-        if(spaceship.isalive == false)
+        if(PlayerData.isAlive == false)
         {
             Gameoverpanel.SetActive(true); // Show game over panel if spaceship is not alive
         }
@@ -71,18 +73,19 @@ public class UIManager : MonoBehaviour
 
     public void onretry()
     {
+        PlayerData.SaveData(); // Save player data before retrying
         Gameoverpanel.SetActive(false); // Hide game over panel
-        spaceship.isalive = true; // Reset spaceship alive status
-        spaceship.spaceShipHealth = spaceship.maxSpaceShipHealth; // Reset spaceship health
-        spaceship.Fuel = spaceship.maxFuel; // Reset spaceship fuel
-        spaceship.Spacedust = 0f; // Reset space dust collected
-        spaceship.timeleft = spaceship.maxtimeleft; // Reset time left
+        PlayerData.isAlive = true; // Reset spaceship alive status
+        PlayerData.currentHealth = PlayerData.maxHealth; // Reset health to max
+        PlayerData.currentFuel = PlayerData.maxFuel; // Reset fuel to max
+        PlayerData.currentTimeLeft = PlayerData.maxTimeWithoutFuel; // Reset time left to max
         player.transform.position = Vector3.zero; // Reset player position to origin
         player.SetActive(true); // Reactivate player object
     }
 
     public void onmenu()
     {
-        SceneManager.LoadScene("MainMenu"); // Load the main menu scene
+        PlayerData.SaveData(); // Save player data before going to menu
+        SceneManager.LoadScene("Main Menu"); // Load the main menu scene
     }
 }

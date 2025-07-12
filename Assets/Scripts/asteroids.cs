@@ -17,7 +17,7 @@ public class asteroids : MonoBehaviour
 
     [SerializeField] private bool isTracking = true; // Flag to check if the asteroid is tracking the player
 
-    SpaceSHip spaceship; // Reference to the SpaceSHip component
+    PlayerData PlayerData; // Reference to the SpaceSHip component
 
     
 
@@ -26,7 +26,7 @@ public class asteroids : MonoBehaviour
     {
         Sprite randomSprite = asteroidSprites[Random.Range(0, asteroidSprites.Length)];
         GetComponent<SpriteRenderer>().sprite = randomSprite;
-        spaceship = target.GetComponent<SpaceSHip>(); // Get the SpaceSHip component from the player
+        PlayerData = PlayerDataManager.Instance.playerData; // Get the player data from the PlayerDataManager
     }
 
     void Awake()
@@ -35,7 +35,7 @@ public class asteroids : MonoBehaviour
         if (target == null)
         {
             target = GameObject.FindGameObjectWithTag("Player"); // Find the player object by tag
-            spaceship = target.GetComponent<SpaceSHip>(); // Get the SpaceSHip component from the player
+            PlayerData = PlayerDataManager.Instance.playerData; // Get the player data from the PlayerDataManager
         }
     }
 
@@ -75,7 +75,7 @@ public class asteroids : MonoBehaviour
             // Handle collision with player
 
             Debug.Log("Asteroid collided with player!");
-            collision.gameObject.GetComponent<SpaceSHip>().TakeDamage(10f);
+            PlayerData.TakeDamage(10f);
             // You can add more logic here, like damaging the player or destroying the asteroid
         }
         else if (collision.gameObject.CompareTag("Asteroid"))
@@ -93,25 +93,7 @@ public class asteroids : MonoBehaviour
             if (health <= 0)
             {
                 Destroy(gameObject); // Destroy the asteroid on bullet hit
-                int randomDrop = Random.Range(0, 6);
-                if (randomDrop == 0)
-                {
-                    spaceship.Fuel = spaceship.Fuel + 5f;
-                }
-                else if (randomDrop == 1)
-                {
-                    if (spaceship.Fuel < 0f)
-                    {
-                        spaceship.Fuel = spaceship.Fuel + 10f;
-                    }
-                    spaceship.spaceShipHealth = spaceship.spaceShipHealth + 5f;
-                }
-                else
-                {
-                    // Add other drops here
-                    //Debug.Log("Asteroid dropped something else!");
-                    spaceship.Spacedust = spaceship.Spacedust + Random.Range(1, 6); // Increment spacedust by 1 on asteroid destruction
-                }
+                PlayerData.Drops();
             }
         }
         else
@@ -121,8 +103,5 @@ public class asteroids : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        
-    }
+    
 }

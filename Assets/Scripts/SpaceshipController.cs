@@ -1,99 +1,50 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class SpaceSHip : MonoBehaviour
+public class SpaceShipController : MonoBehaviour
 {
-    Rigidbody2D myRb;
+    public PlayerData playerData;
+    public float movementSpeed = 5f;
 
-    public GameObject bulletpf;
-
+    public GameObject bulletPrefab;
     public Transform barrel;
 
-    public Vector2 movementDirection;
+    private Rigidbody2D myRb;
+    private InputSystem_Actions playerInputs;
 
-    public float movementSpeed;
+    private bool isShooting = false;
+    private bool isAccelerating = false;
 
-    InputSystem_Actions playerInputs;
-
-    bool isShooting = false;
-
-    bool isAccelerating = false;
-
-    public float spaceShipHealth; // Health of the spaceship
-
-    public float maxSpaceShipHealth = 100f; // Maximum health of the spaceship
-
-    public float Fuel;// Fuel of the spaceship
-
-    public float maxFuel = 100f; // Maximum fuel of the spaceship
-
-    public float maxtimeleft = 120f; // Maximum time left before spaceship is destroyed
-    
-    public float timeleft; // Time left before spaceship is destroyed due to lack of fuel
-
-    public float fireRate = 0.25f; // Fire rate of the spaceship's gun
-
+    private float fireRate = 0.25f;
     private float nextFireTime = 0f;
 
-    public float Spacedust = 0f; // Amount of space dust collected
+    public TrailRenderer burnerTrail;
 
-    public bool isinteractable = false; // Flag to check if the spaceship is interactable
+    private Vector2 movementDirection = Vector2.zero;
 
-    public TrailRenderer burnertrial; // Reference to the LineRenderer for the burner trail
-
-    public bool isalive = true; // Flag to check if the spaceship is alive
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         myRb = GetComponent<Rigidbody2D>();
-        spaceShipHealth = maxSpaceShipHealth; // Initialize spaceship health
-        Fuel = maxFuel; // Initialize spaceship fuel
-        timeleft = maxtimeleft; // Initialize time left
-        if (burnertrial == null)
-        { // Check if burner trail is not assigned in the inspector
-            burnertrial = this.GetComponentInChildren<TrailRenderer>(); // Get the LineRenderer component for the burner trail
-        }
+        playerData = PlayerDataManager.Instance.playerData;
+        playerData.ResetStats();
     }
 
     private void OnEnable()
     {
         if (playerInputs == null)
-        {
             playerInputs = new InputSystem_Actions();
-        }
 
         playerInputs.Enable();
-        playerInputs.Player.Enable(); // ✅ Force Player map to be active
+        playerInputs.Player.Enable();
 
-        // Bindings
         playerInputs.Player.shoot.performed += ctx => isShooting = true;
         playerInputs.Player.shoot.canceled += ctx => isShooting = false;
 
-        playerInputs.Player.Interact.performed += interact;
+        playerInputs.Player.Accelerate.performed += ctx => isAccelerating = true;
+        playerInputs.Player.Accelerate.canceled += ctx => isAccelerating = false;
 
         playerInputs.Player.Look.performed += Lookperformed;
         playerInputs.Player.Look.canceled += Lookperformed;
-
-        playerInputs.Player.Accelerate.performed += ctx => isAccelerating = true;
-        playerInputs.Player.Accelerate.canceled += ctx => isAccelerating = false;
-    }
-
-    private void interact(InputAction.CallbackContext context)
-    {
-        Debug.Log("interact pressed");
-        if (isinteractable)
-        {
-            Debug.Log("Interacting with planet");
-            SceneManager.LoadScene("planets"); // Load the planet scene when interact is pressed
-        }
-        else
-        {
-            Debug.Log("Not interactable with any planet");
-        }
     }
 
     private void OnDisable()
@@ -106,70 +57,57 @@ public class SpaceSHip : MonoBehaviour
         movementDirection = context.ReadValue<Vector2>().normalized;
     }
 
-// Update is called once per frame
-void Update()
+    private void Update()
     {
-        //rotation
-        transform.up = Vector2.Lerp(transform.up, movementDirection, Time.deltaTime * 10f);
-
-        //fire rate for the gun
         if (isShooting && Time.time >= nextFireTime)
         {
-            Debug.Log("Shooting");
-            shooting();
+            Shoot();
             nextFireTime = Time.time + fireRate;
+        }
+
+        if (movementDirection.sqrMagnitude > 0.01f)
+        {
+            transform.up = Vector2.Lerp(transform.up, movementDirection, Time.deltaTime * 10f);
         }
     }
 
     private void FixedUpdate()
     {
-        if (isAccelerating && Fuel > 0)
+        if (!playerData.isAlive)
         {
-            //Accelerate the spaceship in the direction it is facing
-            myRb.linearVelocity = movementSpeed * transform.up.normalized * 5f;
-            Fuel = Fuel - Time.deltaTime * 10f; // Decrease fuel while accelerating
-            burnertrial.enabled = true; // Enable the burner trail when accelerating
+            this.gameObject.SetActive(false);
+            return;
+        }
+
+        if (isAccelerating && playerData.currentFuel > 0)
+        {
+            myRb.linearVelocity = transform.up * movementSpeed;
+            playerData.ConsumeFuel(Time.fixedDeltaTime * 10f);
+            if (burnerTrail != null) burnerTrail.emitting = true;
         }
         else
         {
-            //if not accelerating, keep the spaceship moving in the direction it was last facing and with same speed
-            burnertrial.enabled = false; // Disable the burner trail when not accelerating
+            if (burnerTrail != null) burnerTrail.emitting = false;
         }
 
-        if (Fuel < 0)
+        if (playerData.currentFuel <= 0)
         {
-            timeleft = timeleft - Time.deltaTime;
-            if (timeleft <= 0)
-            {
-                isalive = false; // Set the spaceship as not alive when time runs out
-                this.gameObject.SetActive(false); // Deactivate the spaceship when time runs out
-            }
+            playerData.ConsumeFuel(0f); // continue burning timeLeft
         }
     }
 
-    void shooting()
+    void Shoot()
     {
-        var bullets = Instantiate(bulletpf, barrel.position, barrel.rotation);
+        Instantiate(bulletPrefab, barrel.position, barrel.rotation);
     }
 
     public void TakeDamage(float damage)
     {
-        spaceShipHealth -= damage;
-
-        if (spaceShipHealth <= 0)
+        playerData.TakeDamage(damage);
+        if (!playerData.isAlive)
         {
-            isalive = false; // Set the spaceship as not alive when health reaches zero
-            //Destroy(gameObject); // Destroy the spaceship when health reaches zero
-            this.gameObject.SetActive(false); // Deactivate the spaceship when health reaches zero
-        }
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("planets"))
-        {
-            isinteractable = true; // Set the spaceship as interactable when colliding with a planet
+            playerData.SaveData();
+            this.gameObject.SetActive(false);
         }
     }
 }

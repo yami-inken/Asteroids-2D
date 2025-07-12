@@ -3429,22 +3429,11 @@ PrefabInstance:
       value: SpaceShip
       objectReference: {fileID: 0}
     - target: {fileID: 5476482019283855476, guid: e3f021ccb2296de409e0106e9f1e0be1, type: 3}
-      propertyPath: maxtimeleft
-      value: 60
+      propertyPath: playerData
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5934719379896983145, guid: e3f021ccb2296de409e0106e9f1e0be1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -5.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 7583190933399618242, guid: e3f021ccb2296de409e0106e9f1e0be1, type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7583190933399618242, guid: e3f021ccb2296de409e0106e9f1e0be1, type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.27129397
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3862318471516791260, guid: e3f021ccb2296de409e0106e9f1e0be1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

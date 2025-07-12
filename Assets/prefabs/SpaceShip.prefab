@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5476482019283855476}
   - component: {fileID: 7300483211026368890}
   - component: {fileID: 3214106678019177397}
+  - component: {fileID: 3862318471516791260}
   m_Layer: 3
   m_Name: SpaceShip
   m_TagString: Player
@@ -104,20 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190a7a444133a8846b558bd081cf0e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletpf: {fileID: 7387072285636198622, guid: 0ee90ccfcea69744582d9a63d2338694, type: 3}
+  playerData: {fileID: 3862318471516791260}
+  movementSpeed: 5
+  bulletPrefab: {fileID: 7387072285636198622, guid: 0ee90ccfcea69744582d9a63d2338694, type: 3}
   barrel: {fileID: 939416658938808932}
-  movementDirection: {x: 0, y: 0}
-  movementSpeed: 0.5
-  spaceShipHealth: 0
-  maxSpaceShipHealth: 100
-  Fuel: 0
-  maxFuel: 100
-  maxtimeleft: 120
-  timeleft: 0
-  fireRate: 0.25
-  Spacedust: 0
-  isinteractable: 0
-  isalive: 1
+  burnerTrail: {fileID: 7583190933399618242}
 --- !u!50 &7300483211026368890
 Rigidbody2D:
   serializedVersion: 5
@@ -770,6 +762,28 @@ PolygonCollider2D:
       - {x: 7.56, y: -2.115}
       - {x: 7.5499997, y: -2.105}
   m_UseDelaunayMesh: 0
+--- !u!114 &3862318471516791260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4289441871832617026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 165b9e9f1155736499043861a01730a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  maxFuel: 100
+  currentFuel: 0
+  maxTimeWithoutFuel: 30
+  currentTimeLeft: 0
+  spacedust: 0
+  minpsacedustdrop: 1
+  maxspacedustdrop: 5
+  isAlive: 1
 --- !u!1 &5237257455154290232
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +841,7 @@ Transform:
   m_GameObject: {fileID: 6756132500714160935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -5.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -888,7 +902,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.43425784
+        value: 0.27129397
         inSlope: 0
         outSlope: 0
         tangentMode: 0
