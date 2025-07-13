@@ -86,6 +86,6 @@ public class UIManager : MonoBehaviour
     public void onmenu()
     {
         PlayerData.SaveData(); // Save player data before going to menu
-        SceneManager.LoadScene("Main Menu"); // Load the main menu scene
+        SceneManager.LoadScene("Menu Screen"); // Load the main menu scene
     }
 }
