@@ -5,9 +5,12 @@ public class PlayerData : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
+    public float collectableHealthAmount = 5f; // Amount of health collected from asteroids
 
     public float maxFuel = 100f;
     public float currentFuel;
+    public float fuelConsumptionRate = 10f; // Fuel consumed per second
+    public float CollectableFuelAmount = 5f; // Amount of fuel collected from asteroids
 
     public float maxTimeWithoutFuel = 30f;
     public float currentTimeLeft;
@@ -66,15 +69,15 @@ public class PlayerData : MonoBehaviour
         int randomDrop = Random.Range(0, 6);
         if (randomDrop == 0)
         {
-            currentFuel = currentFuel + 5f;
+            currentFuel = currentFuel + CollectableFuelAmount;
         }
         else if (randomDrop == 1)
         {
             if (currentFuel < 0f)
             {
-                currentFuel = currentFuel + 10f;
+                currentFuel = currentFuel + CollectableFuelAmount + 5f;
             }
-            currentHealth = currentHealth + 5f;
+            currentHealth = currentHealth + collectableHealthAmount;
         }
         else
         {
@@ -92,7 +95,14 @@ public class PlayerData : MonoBehaviour
         {
             maxHealth = this.maxHealth,
             maxFuel = this.maxFuel,
-            spacedust = this.spacedust
+            spacedust = this.spacedust,
+            collectableHealthAmount = this.collectableHealthAmount,
+            fuelConsumptionRate = this.fuelConsumptionRate,
+            CollectableFuelAmount = this.CollectableFuelAmount,
+            minpsacedustdrop = this.minpsacedustdrop,
+            maxspacedustdrop = this.maxspacedustdrop,
+            maxTimeWithoutFuel = this.maxTimeWithoutFuel,
+
         };
 
         string json = JsonUtility.ToJson(saveData, true);
@@ -110,6 +120,12 @@ public class PlayerData : MonoBehaviour
             this.maxHealth = saveData.maxHealth;
             this.maxFuel = saveData.maxFuel;
             this.spacedust = saveData.spacedust;
+            this.collectableHealthAmount = saveData.collectableHealthAmount;
+            this.fuelConsumptionRate = saveData.fuelConsumptionRate;
+            this.CollectableFuelAmount = saveData.CollectableFuelAmount;
+            this.minpsacedustdrop = saveData.minpsacedustdrop;
+            this.maxspacedustdrop = saveData.maxspacedustdrop;
+            this.maxTimeWithoutFuel = saveData.maxTimeWithoutFuel;
 
             Debug.Log("Player data loaded from: " + saveFilePath);
         }

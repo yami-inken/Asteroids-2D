@@ -82,7 +82,7 @@ public class SpaceShipController : MonoBehaviour
         if (isAccelerating && playerData.currentFuel > 0)
         {
             myRb.linearVelocity = transform.up * movementSpeed;
-            playerData.ConsumeFuel(Time.fixedDeltaTime * 10f);
+            playerData.ConsumeFuel(Time.fixedDeltaTime * playerData.fuelConsumptionRate);
             if (burnerTrail != null) burnerTrail.emitting = true;
         }
         else
