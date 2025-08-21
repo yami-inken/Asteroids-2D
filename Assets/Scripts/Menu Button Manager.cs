@@ -10,6 +10,11 @@ public class MenuButtonManager : MonoBehaviour
     public TextMeshProUGUI fuelefficiency;
     public TextMeshProUGUI fuelcollector;
 
+    public TextMeshProUGUI fuelReservesPrice;
+    public TextMeshProUGUI healthPrice;
+    public TextMeshProUGUI fuelefficiencyPrice;
+    public TextMeshProUGUI fuelcollectorPrice;
+
     public GameObject mainscreenpanel;
     public GameObject upgradescreenpanel;
 
