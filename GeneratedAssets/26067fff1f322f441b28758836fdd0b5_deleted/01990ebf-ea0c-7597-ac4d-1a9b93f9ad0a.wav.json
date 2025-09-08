@@ -1,0 +1,13 @@
+{
+    "asset": "26067fff1f322f441b28758836fdd0b5",
+    "fileName": "01990ebf-ea0c-7597-ac4d-1a9b93f9ad0a.wav",
+    "prompt": "an space abmient sound with good bass and less reverd to have a calm vide",
+    "negativePrompt": "",
+    "model": "0ee39b33-2893-4e0f-8c46-0e0bdd4eda85",
+    "modelName": "Text to Sound",
+    "customSeed": -1,
+    "w3CTraceId": "aec1bb9804e5f03696ad7f1bd0fa67b2",
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false
+}

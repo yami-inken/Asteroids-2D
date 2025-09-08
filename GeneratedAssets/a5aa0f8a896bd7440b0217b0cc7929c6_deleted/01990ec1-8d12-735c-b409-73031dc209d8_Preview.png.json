@@ -1,0 +1,11 @@
+{
+    "asset": "a5aa0f8a896bd7440b0217b0cc7929c6",
+    "fileName": "01990ec1-8d12-735c-b409-73031dc209d8_Preview.png",
+    "prompt": "asteroid like stone",
+    "negativePrompt": "",
+    "model": "575ecf67-4425-4939-97b9-5e138b8ee234",
+    "modelName": "Unity Texture2D",
+    "customSeed": 1856247607,
+    "w3CTraceId": "04d861daa76c63e62856ec6ae99c2599",
+    "refinementMode": "Generation"
+}

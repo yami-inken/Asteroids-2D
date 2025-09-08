@@ -4,16 +4,16 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtonManager : MonoBehaviour
 {
-    public TextMeshProUGUI fuelReserves;
-    public TextMeshProUGUI health;
-    public TextMeshProUGUI spaceDustCollected;
-    public TextMeshProUGUI fuelefficiency;
-    public TextMeshProUGUI fuelcollector;
+    public TextMeshPro fuelReserves;
+    public TextMeshPro health;
+    public TextMeshPro spaceDustCollected;
+    public TextMeshPro fuelefficiency;
+    public TextMeshPro fuelcollector;
 
-    public TextMeshProUGUI fuelReservesPrice;
-    public TextMeshProUGUI healthPrice;
-    public TextMeshProUGUI fuelefficiencyPrice;
-    public TextMeshProUGUI fuelcollectorPrice;
+    public TextMeshPro fuelReservesPrice;
+    public TextMeshPro healthPrice;
+    public TextMeshPro fuelefficiencyPrice;
+    public TextMeshPro fuelcollectorPrice;
 
     public GameObject mainscreenpanel;
     public GameObject upgradescreenpanel;
@@ -89,5 +89,10 @@ public class MenuButtonManager : MonoBehaviour
     {
         PlayerData.CollectableFuelAmount += 5f; // Increase fuel collector capacity by 5 when the button is pressed
         fuelcollector.text = "Fuel Collector: " + PlayerData.CollectableFuelAmount.ToString("F2") + " L"; // Update the displayed fuel collector capacity
+    }
+
+    public void onplayerresetstats()
+    {
+        PlayerData.ResetPlayerDataToDefault(); // Reset player data to default values
     }
 }

@@ -22,6 +22,7 @@ public class PlayerData : MonoBehaviour
     public bool isAlive = true;
 
     private string saveFilePath => Path.Combine(Application.persistentDataPath, "playerdata.json");
+    private string defaultSaveFilePath => Path.Combine(Application.dataPath, "Defaultplayerdata.json");
 
     private void Awake()
     {
@@ -88,7 +89,6 @@ public class PlayerData : MonoBehaviour
     }
 
     //json save/load methods
-
     public void SaveData()
     {
         PlayerSaveData saveData = new PlayerSaveData()
@@ -143,4 +143,31 @@ public class PlayerData : MonoBehaviour
             Debug.Log("Save file deleted.");
         }
     }
+
+    public void ResetPlayerDataToDefault()
+    {
+        if (File.Exists(defaultSaveFilePath))
+        {
+            string json = File.ReadAllText(defaultSaveFilePath);
+            PlayerSaveData defaultData = JsonUtility.FromJson<PlayerSaveData>(json);
+            this.maxHealth = defaultData.maxHealth;
+            this.maxFuel = defaultData.maxFuel;
+            this.spacedust = defaultData.spacedust;
+            this.collectableHealthAmount = defaultData.collectableHealthAmount;
+            this.fuelConsumptionRate = defaultData.fuelConsumptionRate;
+            this.CollectableFuelAmount = defaultData.CollectableFuelAmount;
+            this.minpsacedustdrop = defaultData.minpsacedustdrop;
+            this.maxspacedustdrop = defaultData.maxspacedustdrop;
+            this.maxTimeWithoutFuel = defaultData.maxTimeWithoutFuel;
+            SaveData(); // Save the reset data to the save file
+            Debug.Log("Player data reset to default values.");
+        }
+        else
+        {
+            Debug.LogError("Default player data file not found at: " + defaultSaveFilePath);
+        }
+    }
+
+    //player upgrades
+    public void onhealthupgrade
 }
