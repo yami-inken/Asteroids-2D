@@ -223,7 +223,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -387.041, w: 0}
+  m_margin: {x: 0, y: 0, z: -97.91229, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -296,7 +296,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153051036}
   m_LocalRotation: {x: -0, y: -0, z: 1.1641532e-10, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -130.43748}
+  m_LocalPosition: {x: 0, y: 0, z: -32.365044}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -686,7 +686,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254396224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -22.284271}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -694,8 +694,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -4}
-  m_SizeDelta: {x: -31.9, y: -22.6}
+  m_AnchoredPosition: {x: 97.48288, y: -4.698824}
+  m_SizeDelta: {x: 172.32, y: -22.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &605751416
 GameObject:
@@ -1701,10 +1701,14 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   collectableHealthAmount: 5
+  HealthupgradeAmount: 10
+  HealthupgradeCost: 100
   maxFuel: 100
   currentFuel: 0
   fuelConsumptionRate: 10
   CollectableFuelAmount: 5
+  FuelupgradeAmount: 10
+  FuelupgradeCost: 100
   maxTimeWithoutFuel: 30
   currentTimeLeft: 0
   spacedust: 0
