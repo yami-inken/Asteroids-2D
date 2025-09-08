@@ -23,8 +23,12 @@ public class MenuButtonManager : MonoBehaviour
     void Start()
     {
         PlayerData = PlayerDataManager.Instance.playerData; // Get the player data from the PlayerDataManager
+        //fuel reserves upgrades
         fuelReserves.text = "Fuel Reserves: " + PlayerData.maxFuel.ToString("F2") + " L"; // Display max fuel reserves
+        fuelReservesPrice.text = PlayerData.FuelupgradeCost.ToString() + " Spacedust"; // Display fuel upgrade cost
+        //health upgrades
         health.text = "Health: " + PlayerData.maxHealth.ToString("F2") + " HP"; // Display max health
+        healthPrice.text = "Health Upgrade = " + PlayerData.HealthupgradeCost.ToString() + " Spacedust"; // Display health upgrade cost
         spaceDustCollected.text = "Space Dust Collected: " + PlayerData.spacedust.ToString(); // Display collected space dust
         fuelefficiency.text = "Fuel Efficiency: " + PlayerData.fuelConsumptionRate.ToString("F2") + " L/s"; // Display fuel efficiency
         fuelcollector.text = "Fuel Collector: " + PlayerData.CollectableFuelAmount.ToString("F2") + " L"; // Display fuel collector capacity
@@ -68,8 +72,9 @@ public class MenuButtonManager : MonoBehaviour
 
     public void onhealthbutton()
     {
-        PlayerData.maxHealth += 10f; // Increase max health by 10 when the button is pressed
+        PlayerData.healthupgrade(); // Call the health upgrade method from PlayerData
         health.text = "Health: " + PlayerData.maxHealth.ToString("F2") + " HP"; // Update the displayed health
+        healthPrice.text = "Health Upgrade = " + PlayerData.HealthupgradeCost.ToString() + " Spacedust"; // Update the displayed health upgrade cost
     }
 
     public void onfuelefficiancybutton()

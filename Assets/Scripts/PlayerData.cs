@@ -3,14 +3,19 @@ using System.IO;
 
 public class PlayerData : MonoBehaviour
 {
+    //health stats
     public float maxHealth = 100f;
     public float currentHealth;
     public float collectableHealthAmount = 5f; // Amount of health collected from asteroids
+    public float HealthupgradeAmount = 10f; // Amount of health increased per upgrade
+    public float HealthupgradeCost = 100f; // Cost of health upgrade in spacedust
 
     public float maxFuel = 100f;
     public float currentFuel;
     public float fuelConsumptionRate = 10f; // Fuel consumed per second
     public float CollectableFuelAmount = 5f; // Amount of fuel collected from asteroids
+    public float FuelupgradeAmount = 10f; // Amount of fuel increased per upgrade
+    public float FuelupgradeCost = 100f; // Cost of fuel upgrade in spacedust
 
     public float maxTimeWithoutFuel = 30f;
     public float currentTimeLeft;
@@ -169,5 +174,16 @@ public class PlayerData : MonoBehaviour
     }
 
     //player upgrades
-    public void onhealthupgrade
+    public void healthupgrade() {
+        if(spacedust>=HealthupgradeCost)
+        {
+            spacedust = spacedust - HealthupgradeCost;
+            maxHealth = maxHealth + HealthupgradeAmount;
+            HealthupgradeCost = HealthupgradeCost + 100f; // Increase cost for next upgrade
+        }
+        else
+        {
+            Debug.LogWarning("Not enough Space Dust to upgrade health!"); // Log warning if not enough space dust
+        }
+    }
 }
