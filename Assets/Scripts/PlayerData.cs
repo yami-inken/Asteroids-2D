@@ -6,28 +6,32 @@ public class PlayerData : MonoBehaviour
     //health stats
     public float maxHealth = 100f;
     public float currentHealth;
-    public float collectableHealthAmount = 5f; // Amount of health collected from asteroids
     public float HealthupgradeAmount = 10f; // Amount of health increased per upgrade
     public float HealthupgradeCost = 100f; // Cost of health upgrade in spacedust
 
     public float maxFuel = 100f;
     public float currentFuel;
-    public float fuelConsumptionRate = 10f; // Fuel consumed per second
-    public float CollectableFuelAmount = 5f; // Amount of fuel collected from asteroids
     public float FuelupgradeAmount = 10f; // Amount of fuel increased per upgrade
     public float FuelupgradeCost = 100f; // Cost of fuel upgrade in spacedust
 
+    public float fuelConsumptionRate = 20f; // Fuel consumed per second
+    public float fuelefficiencyupgradecost = 100f; //cost of decreasing the consumption rate
+
+    public float CollectableFuelAmount = 5f; // Amount of fuel collected from asteroids
+    public float collectableHealthAmount = 5f; // Amount of health collected from asteroids
+    public float resourcecollectorupgradecost = 100f; //cost of increasing the collection rate
     public float maxTimeWithoutFuel = 30f;
     public float currentTimeLeft;
 
     public float spacedust = 0f;
+    public float spacedustcollectorupgradecost = 100f;
     public int minpsacedustdrop = 1;
     public int maxspacedustdrop = 5; // Maximum spacedust drop amount
 
     public bool isAlive = true;
 
     private string saveFilePath => Path.Combine(Application.persistentDataPath, "playerdata.json");
-    private string defaultSaveFilePath => Path.Combine(Application.dataPath, "Defaultplayerdata.json");
+    private string defaultSaveFilePath => Path.Combine(Application.persistentDataPath, "Defaultplayerdata.json");
 
     private void Awake()
     {
@@ -75,7 +79,15 @@ public class PlayerData : MonoBehaviour
         int randomDrop = Random.Range(0, 6);
         if (randomDrop == 0)
         {
-            currentFuel = currentFuel + CollectableFuelAmount;
+            if(currentFuel < maxFuel)
+            {
+                currentFuel = currentFuel + CollectableFuelAmount;
+            }
+            else
+            {
+                AddSpacedust(Random.Range(minpsacedustdrop, maxspacedustdrop)); // Increment spacedust by 1 on asteroid destruction
+
+            }
         }
         else if (randomDrop == 1)
         {
@@ -153,6 +165,7 @@ public class PlayerData : MonoBehaviour
     {
         if (File.Exists(defaultSaveFilePath))
         {
+            Debug.Log("Default player data file found. Resetting to default values.");
             string json = File.ReadAllText(defaultSaveFilePath);
             PlayerSaveData defaultData = JsonUtility.FromJson<PlayerSaveData>(json);
             this.maxHealth = defaultData.maxHealth;
@@ -184,6 +197,37 @@ public class PlayerData : MonoBehaviour
         else
         {
             Debug.LogWarning("Not enough Space Dust to upgrade health!"); // Log warning if not enough space dust
+        }
+    }
+
+    public void fuelreserveupgrade()
+    {
+        if (spacedust >= FuelupgradeCost)
+        {
+            spacedust = spacedust - FuelupgradeCost;
+            maxFuel = maxFuel + FuelupgradeAmount;
+            FuelupgradeCost = FuelupgradeCost + 100f; // Increase cost for next upgrade
+        }
+        else
+        {
+            Debug.LogWarning("Not enough Space Dust to upgrade fuel reserves!"); // Log warning if not enough space dust
+        }
+    }
+
+    public void fuelefficiencyupgrade()
+    {
+        if (spacedust >= FuelupgradeCost)
+        {
+            spacedust = spacedust - FuelupgradeCost;
+            if(fuelConsumptionRate > 2f)
+            {
+                fuelConsumptionRate = fuelConsumptionRate - 0.5f;
+            }
+            FuelupgradeCost = FuelupgradeCost + 100f; // Increase cost for next upgrade
+        }
+        else
+        {
+            Debug.LogWarning("Not enough Space Dust to upgrade fuel efficiency!"); // Log warning if not enough space dust
         }
     }
 }

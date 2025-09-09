@@ -41,6 +41,18 @@ public class MenuButtonManager : MonoBehaviour
         
     }
 
+    public void loadstats()
+    {
+        fuelReserves.text = "Fuel Reserves: " + PlayerData.maxFuel.ToString("F2") + " L"; // Display max fuel reserves
+        fuelReservesPrice.text = PlayerData.FuelupgradeCost.ToString() + " Spacedust"; // Display fuel upgrade cost
+        //health upgrades
+        health.text = "Health: " + PlayerData.maxHealth.ToString("F2") + " HP"; // Display max health
+        healthPrice.text = "Health Upgrade = " + PlayerData.HealthupgradeCost.ToString() + " Spacedust"; // Display health upgrade cost
+        spaceDustCollected.text = "Space Dust Collected: " + PlayerData.spacedust.ToString(); // Display collected space dust
+        fuelefficiency.text = "Fuel Efficiency: " + PlayerData.fuelConsumptionRate.ToString("F2") + " L/s"; // Display fuel efficiency
+        fuelcollector.text = "Fuel Collector: " + PlayerData.CollectableFuelAmount.ToString("F2") + " L"; // Display fuel collector capacity
+    }
+
     public void onstartbutton()
     {
         SceneManager.LoadScene("SpaceScene"); // Load the main game scene when the start button is pressed
@@ -98,6 +110,7 @@ public class MenuButtonManager : MonoBehaviour
 
     public void onplayerresetstats()
     {
+        Debug.Log("player stat reset called");
         PlayerData.ResetPlayerDataToDefault(); // Reset player data to default values
     }
 }
