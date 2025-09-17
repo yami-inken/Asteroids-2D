@@ -2356,8 +2356,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 60, y: 60, z: 60}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1722720053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2597,7 +2597,7 @@ Transform:
   m_GameObject: {fileID: 1722720052}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.14333, y: -0.52205, z: 0}
+  m_LocalPosition: {x: -40, y: -34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3408,12 +3408,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlanetManager
   planets:
   - name: Mercury
-    orbitRadius: 2
-    orbitSpeed: 2
+    orbitRadius: 80
+    orbitSpeed: 0.2
+    questText: 
+    planetSprite: {fileID: 21300000, guid: bd7a35e0d55749e469cee4ea7c4758fc, type: 3}
+  - name: Venus
+    orbitRadius: 130
+    orbitSpeed: 0.4
+    questText: 
+    planetSprite: {fileID: 21300000, guid: 8dc68bc8a774dbb489c3577777f37f0a, type: 3}
+  - name: Earth
+    orbitRadius: 250
+    orbitSpeed: 4
     questText: 
     planetSprite: {fileID: 0}
-  - name: Venus
-    orbitRadius: 4
+  - name: Mars
+    orbitRadius: 500
+    orbitSpeed: 4
+    questText: 
+    planetSprite: {fileID: 0}
+  - name: Jupiter
+    orbitRadius: 850
+    orbitSpeed: 4
+    questText: 
+    planetSprite: {fileID: 0}
+  - name: Saturn
+    orbitRadius: 1150
+    orbitSpeed: 4
+    questText: 
+    planetSprite: {fileID: 0}
+  - name: Neptune
+    orbitRadius: 1350
+    orbitSpeed: 4
+    questText: 
+    planetSprite: {fileID: 0}
+  - name: Pluto
+    orbitRadius: 1500
     orbitSpeed: 4
     questText: 
     planetSprite: {fileID: 0}

@@ -2,12 +2,12 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 
 [InitializeOnLoad]
-public class AutoMainScreen
+public class AutoPlaySceneLoader
 {
     // Set this to the path of the scene you want to start with
-    private const string StartScenePath = "Assets/Scenes/Menu Screen.unity";
+    private const string StartScenePath = "Assets/Scenes/MainMenu.unity";
 
-    static AutoMainScreen()
+    static AutoPlaySceneLoader()
     {
         EditorApplication.playModeStateChanged += LoadStartScene;
     }
@@ -16,7 +16,20 @@ public class AutoMainScreen
     {
         if (state == PlayModeStateChange.ExitingEditMode)
         {
-            if (EditorSceneManager.GetActiveScene().path != StartScenePath)
+            // If already in the desired scene, just play
+            if (EditorSceneManager.GetActiveScene().path == StartScenePath)
+                return;
+
+            // Popup before switching
+            bool goToMainMenu = EditorUtility.DisplayDialog(
+                "Play Mode Scene Choice",
+                "Do you want to start from the Main Menu scene?\n\n" +
+                "Yes = Load MainMenu and Play\nNo = Stay in current scene",
+                "Yes (MainMenu)",
+                "No (Current Scene)"
+            );
+
+            if (goToMainMenu)
             {
                 if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 {
@@ -24,7 +37,7 @@ public class AutoMainScreen
                 }
                 else
                 {
-                    EditorApplication.isPlaying = false; // cancel play if user doesn't save
+                    EditorApplication.isPlaying = false; // cancel play
                 }
             }
         }
