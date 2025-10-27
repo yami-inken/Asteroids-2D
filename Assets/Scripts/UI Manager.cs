@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     private GameObject player;
 
-    PlayerData PlayerData; // Reference to the SpaceSHip component
+    PlayerData PlayerData; // Reference to the player data
 
     [SerializeField]
     public Slider healthSL; // Reference to the UI slider for health
@@ -47,7 +47,9 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(PlayerData.currentHealth);
         healthSL.value = PlayerData.currentHealth; // Initialize health slider
+        
         FuelSL.value = PlayerData.currentFuel;
         spacedust_collectedTEXT.text = "Space Dust :- " + PlayerData.spacedust.ToString(); // Update space dust collected text
         if (PlayerData.currentFuel <= 0f)

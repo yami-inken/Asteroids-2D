@@ -4,42 +4,68 @@ using UnityEditor.SceneManagement;
 [InitializeOnLoad]
 public class AutoPlaySceneLoader
 {
-    // Set this to the path of the scene you want to start with
-    private const string StartScenePath = "Assets/Scenes/MainMenu.unity";
+    private const string StartScenePath = "Assets/Scenes/Menu Screen.unity"; // Your main menu scene path
+    private static string _previousScenePath; // To remember the scene you were in
 
     static AutoPlaySceneLoader()
     {
-        EditorApplication.playModeStateChanged += LoadStartScene;
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
     }
 
-    private static void LoadStartScene(PlayModeStateChange state)
+    private static void OnPlayModeStateChanged(PlayModeStateChange state)
     {
+        // When you press "Play" in the editor
         if (state == PlayModeStateChange.ExitingEditMode)
         {
-            // If already in the desired scene, just play
+            // If we are already in the main menu, do nothing.
             if (EditorSceneManager.GetActiveScene().path == StartScenePath)
+            {
                 return;
+            }
 
-            // Popup before switching
+            // Ask the user if they want to switch scenes
             bool goToMainMenu = EditorUtility.DisplayDialog(
-                "Play Mode Scene Choice",
-                "Do you want to start from the Main Menu scene?\n\n" +
-                "Yes = Load MainMenu and Play\nNo = Stay in current scene",
-                "Yes (MainMenu)",
-                "No (Current Scene)"
+                "Start From Main Menu?",
+                "Do you want to start playing from the Main Menu scene?",
+                "Yes, Start from Main Menu",
+                "No, Use Current Scene"
             );
 
             if (goToMainMenu)
             {
+                // Stop the editor from entering play mode immediately
+                EditorApplication.isPlaying = false;
+
+                // Save changes to the current scene if the user wants to
                 if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 {
+                    // Remember where we were, so we can return later
+                    _previousScenePath = EditorSceneManager.GetActiveScene().path;
+                    // Open the main menu scene
                     EditorSceneManager.OpenScene(StartScenePath);
-                }
-                else
-                {
-                    EditorApplication.isPlaying = false; // cancel play
+                    // Tell the editor to enter play mode on the next available frame
+                    EditorApplication.update += EnterPlayModeOnNextUpdate;
                 }
             }
         }
+
+        // When you stop playing and return to the editor
+        if (state == PlayModeStateChange.EnteredEditMode)
+        {
+            // If we have a stored previous scene, load it back
+            if (!string.IsNullOrEmpty(_previousScenePath))
+            {
+                EditorSceneManager.OpenScene(_previousScenePath);
+                _previousScenePath = null; // Clear it so it doesn't happen again
+            }
+        }
+    }
+
+    private static void EnterPlayModeOnNextUpdate()
+    {
+        // Unsubscribe from the event so this only runs once
+        EditorApplication.update -= EnterPlayModeOnNextUpdate;
+        // Now, enter play mode
+        EditorApplication.isPlaying = true;
     }
 }
