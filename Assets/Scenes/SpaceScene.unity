@@ -3419,34 +3419,34 @@ MonoBehaviour:
     planetSprite: {fileID: 21300000, guid: 8dc68bc8a774dbb489c3577777f37f0a, type: 3}
   - name: Earth
     orbitRadius: 250
-    orbitSpeed: 4
+    orbitSpeed: 0.4
     questText: 
-    planetSprite: {fileID: 0}
+    planetSprite: {fileID: 21300000, guid: bd7a35e0d55749e469cee4ea7c4758fc, type: 3}
   - name: Mars
     orbitRadius: 500
-    orbitSpeed: 4
+    orbitSpeed: 0.4
     questText: 
-    planetSprite: {fileID: 0}
+    planetSprite: {fileID: 21300000, guid: 8dc68bc8a774dbb489c3577777f37f0a, type: 3}
   - name: Jupiter
     orbitRadius: 850
-    orbitSpeed: 4
+    orbitSpeed: 0.4
     questText: 
-    planetSprite: {fileID: 0}
+    planetSprite: {fileID: 21300000, guid: bd7a35e0d55749e469cee4ea7c4758fc, type: 3}
   - name: Saturn
     orbitRadius: 1150
-    orbitSpeed: 4
+    orbitSpeed: 0.4
     questText: 
-    planetSprite: {fileID: 0}
+    planetSprite: {fileID: 21300000, guid: 8dc68bc8a774dbb489c3577777f37f0a, type: 3}
   - name: Neptune
     orbitRadius: 1350
-    orbitSpeed: 4
+    orbitSpeed: 0.4
     questText: 
-    planetSprite: {fileID: 0}
+    planetSprite: {fileID: 21300000, guid: bd7a35e0d55749e469cee4ea7c4758fc, type: 3}
   - name: Pluto
     orbitRadius: 1500
-    orbitSpeed: 4
+    orbitSpeed: 0.4
     questText: 
-    planetSprite: {fileID: 0}
+    planetSprite: {fileID: 21300000, guid: 8dc68bc8a774dbb489c3577777f37f0a, type: 3}
   planetPrefab: {fileID: 6761091099400493792, guid: 1759e874e11c98a48a0777dab4064fad, type: 3}
   sun: {fileID: 1445951477}
 --- !u!4 &2091707252
